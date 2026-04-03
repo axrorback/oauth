@@ -1,3 +1,4 @@
+import hashlib
 from uuid import uuid4
 
 class TokenService:
@@ -8,6 +9,7 @@ class TokenService:
     @staticmethod
     def reset_token():
         return str(uuid4())
+
     @staticmethod
     def hash(token: str) -> str:
         return hashlib.sha256(token.encode()).hexdigest()
