@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Tasdiqlash</title>
+    <style>
+        /* Xabarlar uchun uslublar */
+        .messages {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+        .message-item {
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            font-family: sans-serif;
+        }
+        /* Django message tags bo'yicha ranglar */
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+        }
+    </style>
+</head>
+<body>
+
+    <div style="max-width: 400px; margin: 50px auto; text-align: center;">
+        <h2>Tizimga kirish</h2>
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="message-item {{ message.tags }}">
+                        {{ message }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <form method="post">
+            {% csrf_token %}
+            <div style="text-align: left; margin-bottom: 15px;">
+                {{ form.as_p }}
+            </div>
+            <button type="submit" style="width: 100%; padding: 10px; cursor: pointer;">
+                Kirish
+            </button>
+        </form>
+    </div>
+
+</body>
+</html>
