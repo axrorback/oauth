@@ -1,29 +1,37 @@
-from django.shortcuts import render ,redirect , reverse
-from django.views.generic import FormView
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
+from django.views.generic import FormView , TemplateView
 from users.forms import RegisterForm
-from users.service import TokenService
-from users.models import EmailVerificationToken
-from users.tasks import EmailTask
-
+from users.service import UserService
+from users.models import SiteConfig
 class RegisterView(FormView):
     template_name = 'users/register.html'
     form_class = RegisterForm
-    success_url = '/check-email/'
+    success_url = reverse_lazy('check_email')
+
+    def dispatch(self, request, *args, **kwargs):
+        config = SiteConfig.objects.filter(key='registration_open').first()
+
+        if not config or not config.value:
+            return redirect('register_closed')
+
+        return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
-        user = form.save(commit=False)
-        user.is_active = False
-        user.save()
+        data = form.cleaned_data
 
-        raw_token = TokenService.registration_token()
-        hashed_token = TokenService.hash(raw_token)
+        base_url = self.request.build_absolute_uri('/')[:-1]
 
-        EmailVerificationToken.objects.create(
-            user=user,
-            token=hashed_token
+        UserService.create_user(
+            username=data['username'],
+            email=data['email'],
+            password=data['password'],
+            base_url=base_url
         )
 
-        verification_link = self.request.build_absolute_uri(reverse('verify')) + f'?token={raw_token}'
-        EmailTask.delay(user.email, verification_link)
-        print(verification_link)
+        self.request.session['check_email'] = {
+            'allowed': True,
+            'email': data['email']
+        }
+
         return super().form_valid(form)
