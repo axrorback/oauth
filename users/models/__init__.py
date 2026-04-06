@@ -5,3 +5,4 @@ from users.models.LoginHistory import LoginHistory
 from users.models.BaseToken import BaseToken
 from users.models.PasswordResetToken import PasswordResetToken
 from users.models.EmailToken import EmailVerificationToken
+from users.models.SiteConfig import SiteConfig
