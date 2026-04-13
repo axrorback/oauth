@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Authorize App</h1>
+<p>{{ application.name }} sizning ma'lumotlaringizga kirishni so‘rayapti</p>
+
+<form method="post">
+  {% csrf_token %}
+  <button name="allow">Allow</button>
+  <button name="deny">Deny</button>
+</form>
+</body>
+</html>

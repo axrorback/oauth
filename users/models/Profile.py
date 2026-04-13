@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
 import uuid
-User = settings.AUTH_USER_MODEL
+from users.models import User
 
 class Profile(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

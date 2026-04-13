@@ -3,3 +3,8 @@ from .CheckEmail import CheckEmailView
 from .RegisterClosed import RegisterClosedView
 from .VerifyEmail import VerifyView
 from .CustomLogin import CustomLoginView
+from .Profile import ProfileView
+from .ProfileUpdate import ProfileUpdateView
+from .ChangePassword import ChangePasswordView
+from .ChangePasswordDone import ChangePasswordDoneView
+from .ProfileAPI import ProfileAPI

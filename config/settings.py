@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'oauth2_provider',
     'corsheaders',
     'axes',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +53,24 @@ CACHES = {
 }
 CELERY_BROKER_URL = os.getenv('REDIS_URL')
 CELERY_RESULT_BACKEND = os.getenv('REDIS_URL')
+
+
+
+OAUTH2_PROVIDER = {
+    "ACCESS_TOKEN_EXPIRE_SECONDS": 3600,
+    "AUTHORIZATION_CODE_EXPIRE_SECONDS": 300,
+    "REFRESH_TOKEN_EXPIRE_SECONDS": 86400,
+
+    "ROTATE_REFRESH_TOKEN": True,
+    "REUSE_REFRESH_TOKEN": False,
+
+    "SCOPES": {
+        "read": "Read access",
+        "write": "Write access",
+    },
+
+    "PKCE_REQUIRED": True,
+}
 
 AUTHENTICATION_BACKENDS = [
     'axes.backends.AxesBackend',
@@ -117,6 +136,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3.S3Storage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
 AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
@@ -133,6 +161,7 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 
+LOGIN_REDIRECT_URL = '/'
 
 LANGUAGE_CODE = 'en-us'
 
