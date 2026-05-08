@@ -8,8 +8,13 @@ class ProfileAPI(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
+        user = request.user
         return Response({
-            "id": request.user.id,
-            "username": request.user.username,
-            "email": request.user.email,
+            "id": user.id,
+            "username": user.username,
+            "email": user.email,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "avatar": user.avatar.url if hasattr(user, 'avatar') and user.avatar else None,
+            "date_joined": user.date_joined,
         })
