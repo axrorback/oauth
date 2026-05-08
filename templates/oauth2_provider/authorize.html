@@ -2,16 +2,136 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Authorize - {{ application.name }}</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            background: #1e293b;
+            padding: 40px;
+            border-radius: 20px;
+            width: 400px;
+            text-align: center;
+        }
+
+        .logo {
+            width: 64px;
+            height: 64px;
+            background: #2563eb;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin: 0 auto 20px;
+        }
+
+        h1 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #94a3b8;
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        .scopes {
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 24px;
+            text-align: left;
+        }
+
+        .scopes p {
+            font-size: 13px;
+            color: #94a3b8;
+            margin-bottom: 10px;
+        }
+
+        .scope-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 0;
+            font-size: 14px;
+            color: #e2e8f0;
+        }
+
+        .scope-item::before {
+            content: "✓";
+            color: #22c55e;
+            font-weight: bold;
+        }
+
+        /* {{ form }} hidden qilish */
+        form > div { display: none; }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 13px;
+            border-radius: 10px;
+            border: none;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-allow {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-deny {
+            background: #1e293b;
+            color: #94a3b8;
+            border: 1px solid #334155;
+        }
+
+        .btn:hover { opacity: 0.85; }
+    </style>
 </head>
 <body>
-<h1>Authorize App</h1>
-<p>{{ application.name }} sizning ma'lumotlaringizga kirishni so‘rayapti</p>
+<div class="card">
 
-<form method="post">
-  {% csrf_token %}
-  <button name="allow">Allow</button>
-  <button name="deny">Deny</button>
-</form>
+    <div class="logo">🔐</div>
+
+    <h1>{{ application.name }}</h1>
+    <p class="subtitle">sizning ma'lumotlaringizga kirishni so'rayapti</p>
+
+    <div class="scopes">
+        <p>Quyidagilarga ruxsat beriladi:</p>
+        {% for scope in scopes %}
+            <div class="scope-item">{{ scope.description }}</div>
+        {% endfor %}
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <div class="buttons">
+            <button class="btn btn-allow" name="allow">Ruxsat berish</button>
+            <button class="btn btn-deny" name="deny">Rad etish</button>
+        </div>
+    </form>
+
+</div>
 </body>
 </html>
