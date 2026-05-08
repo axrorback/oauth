@@ -185,3 +185,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CELERY_WORKER_CANCEL_LONG_RUNNING_TASKS_ON_CONNECTION_LOSS = True
 
 LOGIN_URL = '/users/login/'
+
+LOGGING = {
+    'version': 1,
+    'handlers': {
+        'console': {'class': 'logging.StreamHandler'},
+    },
+    'loggers': {
+        'oauth2_provider': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+    },
+}
