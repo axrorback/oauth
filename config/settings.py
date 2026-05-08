@@ -66,13 +66,19 @@ OAUTH2_PROVIDER = {
     "REUSE_REFRESH_TOKEN": False,
 
     "SCOPES": {
+        "openid": "OpenID Connect scope",
+        "profile": "User profile",
+        "email": "User email",
         "read": "Read access",
         "write": "Write access",
     },
 
     "PKCE_REQUIRED": True,
-}
 
+    # OIDC
+    "OIDC_ENABLED": True,
+    "OIDC_RSA_PRIVATE_KEY": open("/root/oauth/private.pem").read(),
+}
 AUTHENTICATION_BACKENDS = [
     'axes.backends.AxesBackend',
     'django.contrib.auth.backends.ModelBackend',
