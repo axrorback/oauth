@@ -1,8 +1,5 @@
 from django.db import models
 from django.conf import settings
-import uuid
-from datetime import timedelta
-from django.utils import timezone
 
 User = settings.AUTH_USER_MODEL
 
