@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Imkoniyatlar | Coderboys ID</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0d1117;
+            --card-bg: #161b22;
+            --text: #c9d1d9;
+            --primary: #238636;
+            --border: #30363d;
+            --accent: #58a6ff;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.7;
+        }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+        .mono { font-family: var(--font-mono); }
+
+        h1, h2, h3 { color: #fff; }
+        .accent-text { color: var(--accent); }
+
+        .section { margin-bottom: 60px; padding-bottom: 40px; border-bottom: 1px solid var(--border); }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 15px;
+            border: 1px solid var(--border);
+            text-align: left;
+        }
+
+        .comparison-table th { background: #21262d; color: var(--accent); }
+
+        .flow-step {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .step-num {
+            background: var(--primary);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-weight: bold;
+        }
+
+        .code-snippet {
+            background: #000;
+            padding: 15px;
+            border-radius: 8px;
+            color: #7ee787;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            border: 1px solid var(--border);
+        }
+
+        @media (max-width: 600px) {
+            .comparison-table { font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <div class="section" style="text-align: center; border: none;">
+        <h1 class="mono">/features --detailed</h1>
+        <p style="color: #8b949e;">Coderboys ID tizimining ishlash mantiqi va afzalliklari</p>
+    </div>
+
+    <!-- 1. Nima bu servis? -->
+    <div class="section">
+        <h2><i class="bi bi-question-circle"></i> Bu qanday servis?</h2>
+        <p>
+            **Coderboys ID** — bu markazlashgan autentifikatsiya va avtorizatsiya provayderi.
+            U "Identity as a Service" (IDaaS) modelida ishlaydi. Bu shuni anglatadiki, siz o'z loyihangizda
+            foydalanuvchilarni ro'yxatga olish, parollarni saqlash va login qilish qismini yozib o'tirmaysiz.
+            Barcha og'irlikni bizning serverlar ko'taradi.
+        </p>
+    </div>
+
+    <!-- 2. OAuth2 vs Oddiy API -->
+    <div class="section">
+        <h2><i class="bi bi-arrow-left-right"></i> OAuth2 vs Oddiy API Auth</h2>
+        <p>Nega shunchaki Login API emas, aynan OAuth2? Farqini quyidagi jadvalda ko'rishingiz mumkin:</p>
+
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Xususiyat</th>
+                    <th>Oddiy API (JWT)</th>
+                    <th>Coderboys OAuth2</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Xavfsizlik</td>
+                    <td>Parol sizning bazangizda turadi</td>
+                    <td>Parol bizda, sizda faqat Token</td>
+                </tr>
+                <tr>
+                    <td>SSO imkoniyati</td>
+                    <td>Faqat bitta saytda ishlaydi</td>
+                    <td>Barcha loyihalaringizga bitta login</td>
+                </tr>
+                <tr>
+                    <td>Uchinchi tomon</td>
+                    <td>Xavfli (parol berish kerak)</td>
+                    <td>Xavfsiz (faqat ruxsat beriladi)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 3. Ishlash oqimi (Flow) -->
+    <div class="section">
+        <h2><i class="bi bi-diagram-3"></i> Integratsiya Flow</h2>
+        <p>Agar foydalanuvchi sizning saytingizda "Coderboys orqali kirish" tugmasini bossa, jarayon quyidagicha kechadi:</p>
+
+
+
+        <div class="flow-step">
+            <div class="step-num">1</div>
+            <div>
+                <strong>Redirect:</strong> Saytingiz foydalanuvchini bizning <code>/authorize/</code> sahifamizga yuboradi.
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <div class="step-num">2</div>
+            <div>
+                <strong>Consent:</strong> Foydalanuvchi o'z login/parolini kiritadi va sizning ilovangizga ruxsat beradi.
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <div class="step-num">3</div>
+            <div>
+                <strong>Callback:</strong> Biz foydalanuvchini maxsus <code>code</code> bilan sizning saytingizga qaytaramiz.
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <div class="step-num">4</div>
+            <div>
+                <strong>Token Exchange:</strong> Sizning backend-ingiz ushbu kodni bizga yuborib, <code>access_token</code> oladi.
+                <div class="code-snippet mono">
+                    POST /o/token/ <br>
+                    { "code": "...", "client_id": "...", "grant_type": "authorization_code" }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. Foydasi nimada? -->
+    <div class="section" style="border: none;">
+        <h2><i class="bi bi-gem"></i> Foydalanuvchi va Dasturchi uchun foydasi</h2>
+        <ul>
+            <li><strong>Vaqt tejalishi:</strong> Login/Register funksiyasini qurish uchun ketadigan 10-15 soatlik ishni 15 daqiqaga qisqartirasiz.</li>
+            <li><strong>Ishonch:</strong> Foydalanuvchilar har bir yangi saytda yangi parol o'ylab topishdan charchashmaydi.</li>
+            <li><strong>Xavfsizlik:</strong> Ma'lumotlar buzib kirilsa ham, sizning bazangizda foydalanuvchi parollari bo'lmaydi.</li>
+            <li><strong>SSO:</strong> Barcha loyihalaringizga bitta login.</li>
+            <li><strong>UX:</strong> Foydalanuvchilar faqatgina Sign with CODERBOYS orqali sizning ilovadan foydalanishi mumkin!</li>
+        </ul>
+    </div>
+
+    <div style="text-align: center; margin-top: 50px;">
+        <a href="https://t.me/axrorback" style="color: var(--primary); text-decoration: none; font-weight: bold;">
+            <i class="bi bi-rocket-takeoff"></i> Hoziroq integratsiyani boshlang
+        </a>
+    </div>
+</div>
+
+</body>
+</html>
