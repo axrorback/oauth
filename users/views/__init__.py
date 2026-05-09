@@ -8,3 +8,4 @@ from .ProfileUpdate import ProfileUpdateView
 from .ChangePassword import ChangePasswordView
 from .ChangePasswordDone import ChangePasswordDoneView
 from .ProfileAPI import ProfileAPI
+from .LoginHistory import UserLoginHistoryView
