@@ -10,5 +10,6 @@ urlpatterns = [
     path('profile-edit/',ProfileUpdateView.as_view(),name='profile_edit'),
     path('change-password/',ChangePasswordView.as_view(),name='change_password'),
     path('change-password-done/',ChangePasswordDoneView.as_view(),name='change_password_done'),
+    path('login-history/',UserLoginHistoryView.as_view(),name='login_history'),
     path('api/profile/',ProfileAPI.as_view(),name='profile_api'),
 ]
