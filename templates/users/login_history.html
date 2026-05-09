@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login Tarixi | CODERBOYS</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #f5f7f9; --card-bg: #ffffff; --text: #24292f;
+      --primary: #1a7f37; --accent: #0969da; --border: #d0d7de;
+      --terminal-head: #eef1f4; --font-mono: 'JetBrains Mono', monospace;
+    }
+    body { background-color: var(--bg); color: var(--text); font-family: var(--font-mono); min-height: 100vh; padding: 40px 0; }
+    .history-container { max-width: 800px; margin: auto; padding: 0 15px; }
+    .terminal-window { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.05); }
+    .terminal-header { background: var(--terminal-head); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
+    .terminal-dots { display: flex; gap: 6px; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-1 { background: #ff5f56; }
+    .dot-2 { background: #ffbd2e; }
+    .dot-3 { background: #27c93f; }
+    .terminal-body { padding: 30px; }
+    .table { font-size: 0.85rem; }
+    .status-success { color: var(--primary); font-weight: bold; }
+    .status-failed { color: #cf222e; font-weight: bold; }
+    .ua-text { max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; color: #6e7781; }
+  </style>
+</head>
+<body>
+
+<div class="history-container">
+  <div class="terminal-window">
+    <div class="terminal-header">
+      <div class="terminal-dots">
+        <div class="dot dot-1"></div>
+        <div class="dot dot-2"></div>
+        <div class="dot dot-3"></div>
+      </div>
+      <div style="font-size: 0.75rem; color: #656d76;">
+        <i class="bi bi-shield-lock"></i> security_audit.log
+      </div>
+    </div>
+
+    <div class="terminal-body">
+      <h2 class="fs-5 mb-4">coderboys@auth:~$ tail -n 20 login_history.log</h2>
+
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr class="text-muted" style="border-bottom: 2px solid var(--border);">
+              <th>SANA / VAQT</th>
+              <th>HOLAT</th>
+              <th>IP MANZIL</th>
+              <th>QURILMA</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for log in history_list %}
+            <tr>
+              <td class="text-nowrap">{{ log.created_at|date:"Y-m-d H:i" }}</td>
+              <td>
+                <span class="{% if log.status == 'success' %}status-success{% else %}status-failed{% endif %}">
+                  {% if log.status == 'success' %}OK (200){% else %}FAIL (403){% endif %}
+                </span>
+              </td>
+              <td><code>{{ log.ip_address }}</code></td>
+              <td>
+                <span class="ua-text" title="{{ log.user_agent }}">
+                  {{ log.device|default:log.user_agent|truncatechars:30 }}
+                </span>
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="4" class="text-center py-4 text-muted">Hozircha hech qanday ma'lumot yozilmagan.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mt-4 pt-3 border-top d-flex justify-content-between">
+        <a href="{% url 'profile' %}" class="btn btn-sm btn-outline-secondary">
+          <i class="bi bi-arrow-left"></i> Profilga qaytish
+        </a>
+        <span class="text-muted small">Total: {{ history_list.count }} logs</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
