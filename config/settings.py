@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users',
+    'home',
     'rest_framework',
     'rest_framework.authtoken',
     'oauth2_provider',
@@ -52,6 +53,7 @@ CACHES = {
         }
     }
 }
+
 CELERY_BROKER_URL = os.getenv('REDIS_URL')
 CELERY_RESULT_BACKEND = os.getenv('REDIS_URL')
 
@@ -80,9 +82,16 @@ OAUTH2_PROVIDER = {
     "OIDC_ENABLED": True,
     "OIDC_RSA_PRIVATE_KEY": open("/root/oauth/private.pem").read(),
 }
+
+
 AUTHENTICATION_BACKENDS = [
     'axes.backends.AxesBackend',
     'django.contrib.auth.backends.ModelBackend',
+]
+
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -112,6 +121,8 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
 AXES_ENABLED = False
 AXES_FAILURE_LIMIT = 3
 AXES_COOLOFF_TIME = timedelta(hours=2)
