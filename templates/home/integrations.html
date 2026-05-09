@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Integratsiya Yo'riqnomasi | Coderboys ID</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0d1117;
+            --card-bg: #161b22;
+            --text: #c9d1d9;
+            --primary: #238636;
+            --border: #30363d;
+            --accent: #58a6ff;
+            --code-bg: #010409;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            margin: 0; padding: 0; line-height: 1.6;
+        }
+
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+        .mono { font-family: var(--font-mono); }
+        h1, h2, h3 { color: #fff; margin-top: 30px; }
+
+        /* Sidebar layout simulyatsiyasi */
+        .layout { display: grid; grid-template-columns: 250px 1fr; gap: 40px; }
+
+        .sidebar { position: sticky; top: 40px; height: fit-content; }
+        .sidebar ul { list-style: none; padding: 0; }
+        .sidebar li { margin-bottom: 15px; }
+        .sidebar a { color: #8b949e; text-decoration: none; font-size: 0.9rem; transition: 0.3s; }
+        .sidebar a:hover { color: var(--accent); }
+
+        .content { background: transparent; }
+
+        .step-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            overflow-x: auto;
+            margin: 15px 0;
+            color: #7ee787;
+            font-size: 0.85rem;
+        }
+
+        .endpoint-badge {
+            background: #21262d;
+            padding: 4px 8px;
+            border-radius: 4px;
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 0.8rem;
+            margin-right: 10px;
+        }
+
+        .badge-get { color: #7ee787; }
+        .badge-post { color: #d29922; }
+
+        @media (max-width: 850px) {
+            .layout { grid-template-columns: 1fr; }
+            .sidebar { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h4 class="mono" style="color: var(--primary); margin-bottom: 20px;">DOCS v1.0</h4>
+            <ul>
+                <li><a href="#openid-config">OIDC Konfiguratsiya</a></li>
+                <li><a href="#step1">1. Kalitlarni olish</a></li>
+                <li><a href="#step2">2. Avtorizatsiya</a></li>
+                <li><a href="#step3">3. Token olish</a></li>
+                <li><a href="#step4">4. User Info</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <h1 class="mono">Integratsiya Yo'riqnomasi</h1>
+            <p style="color: #8b949e;">Ushbu qo'llanma orqali siz Coderboys ID xizmatini o'z loyihangizga OpenID Connect standarti asosida ulay olasiz.</p>
+
+            <!-- OIDC Discovery -->
+            <section id="openid-config" class="step-card">
+                <h3><i class="bi bi-gear-wide-connected"></i> OpenID Konfiguratsiyasi</h3>
+                <p>Bizning servis standart <code>.well-known/openid-configuration</code> endpointini qo'llab-quvvatlaydi:</p>
+                <div class="code-block mono">
+{
+  "issuer": "https://auth.coderboys.dev/o",
+  "authorization_endpoint": "https://auth.coderboys.dev/o/authorize/",
+  "token_endpoint": "https://auth.coderboys.dev/o/token/",
+  "userinfo_endpoint": "https://auth.coderboys.dev/o/userinfo/",
+  "scopes_supported": ["openid", "profile", "email"]
+}
+                </div>
+            </section>
+
+            <!-- Step 1 -->
+            <section id="step1" class="step-card">
+                <h3>1. Client kalitlarini olish</h3>
+                <p>Integratsiyani boshlash uchun sizga <code>Client ID</code> va <code>Client Secret</code> kerak bo'ladi. Hozircha kalitlarni olish uchun administratorga murojaat qiling:</p>
+                <a href="https://t.me/axrorback" style="text-decoration: none;" target="_blank">
+                    <div class="code-block" style="text-align: center; color: var(--accent); cursor: pointer;">
+                        <i class="bi bi-telegram"></i> @axrorback bilan bog'lanish
+                    </div>
+                </a>
+            </section>
+
+            <!-- Step 2 -->
+            <section id="step2" class="step-card">
+                <h3>2. Avtorizatsiya so'rovi</h3>
+                <p>Foydalanuvchini Coderboys ID sahifasiga yo'naltiring:</p>
+                <div class="code-block mono">
+<span class="endpoint-badge badge-get">GET</span> https://auth.coderboys.dev/o/authorize/
+?response_type=code
+&client_id=YOUR_CLIENT_ID
+&redirect_uri=YOUR_CALLBACK_URL
+&scope=openid profile email
+                </div>
+                <p style="font-size: 0.85rem; color: #8b949e;">* <code>redirect_uri</code> bizning tizimda oldindan ro'yxatdan o'tgan bo'lishi shart.</p>
+            </section>
+
+            <!-- Step 3 -->
+            <section id="step3" class="step-card">
+                <h3>3. Access Token olish</h3>
+                <p>Callback URL orqali kelgan <code>code</code>ni tokenga almashtiring:</p>
+                <div class="code-block mono">
+<span class="endpoint-badge badge-post">POST</span> https://auth.coderboys.dev/o/token/
+
+Payload:
+{
+  "grant_type": "authorization_code",
+  "code": "RECEIVED_CODE",
+  "client_id": "YOUR_CLIENT_ID",
+  "client_secret": "YOUR_CLIENT_SECRET",
+  "redirect_uri": "YOUR_CALLBACK_URL"
+}
+                </div>
+            </section>
+
+            <!-- Step 4 -->
+            <section id="step4" class="step-card">
+                <h3>4. Foydalanuvchi ma'lumotlarini olish</h3>
+                <p>Olingan <code>access_token</code> yordamida foydalanuvchi profilini yuklang:</p>
+                <div class="code-block mono">
+<span class="endpoint-badge badge-get">GET</span> https://auth.coderboys.dev/o/userinfo/
+Headers:
+{ "Authorization": "Bearer YOUR_ACCESS_TOKEN" }
+                </div>
+            </section>
+
+            <footer style="margin-top: 50px; color: #484f58; font-size: 0.8rem; text-align: center;">
+                Barcha so'rovlar HTTPS orqali amalga oshirilishi shart. <br>
+                &copy; 2026 Coderboys Ecosystem.
+            </footer>
+        </main>
+    </div>
+</div>
+
+</body>
+</html>
