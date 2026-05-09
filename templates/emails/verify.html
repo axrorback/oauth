@@ -1,70 +1,75 @@
 <!DOCTYPE html>
-<html>
+<html lang="uz">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coderboys Authentication</title>
+    <title>Coderboys Tasdiqlash Tizimi</title>
 </head>
-<body style="margin: 0; padding: 0; background-color: #f0f2f5; font-family: 'Segoe UI', Arial, sans-serif;">
+<body style="margin: 0; padding: 0; background-color: #f4f7f6; font-family: 'JetBrains Mono', 'Segoe UI', Arial, sans-serif;">
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr>
             <td align="center" style="padding: 20px 0;">
-                <table width="550" border="0" cellspacing="0" cellpadding="0" style="background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
-                    
+                <table width="550" border="0" cellspacing="0" cellpadding="0" style="background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 15px 45px rgba(0,0,0,0.1);">
+
+                    <!-- Header: Terminal Style -->
                     <tr>
-                        <td align="center" style="background: linear-gradient(135deg, #212529 0%, #343a40 100%); padding: 40px 20px;">
-                            <div style="font-size: 40px; margin-bottom: 10px;">🤖</div>
-                            <h1 style="color: #00ff41; margin: 0; font-family: 'Courier New', monospace; font-size: 24px; letter-spacing: 1px;">
-                                CODERBOYS OAuth2.0
+                        <td align="center" style="background: #1a1a1a; padding: 45px 20px; border-bottom: 4px solid #1a7f37;">
+                            <div style="font-size: 50px; margin-bottom: 15px;"></div>
+                            <h1 style="color: #00ff41; margin: 0; font-family: 'Courier New', monospace; font-size: 24px; letter-spacing: 2px; text-transform: uppercase;">
+                                CODERBOYS AUTH
                             </h1>
+                            <p style="color: #666; font-size: 11px; margin-top: 5px; font-family: monospace;">[ Tizim holati: Tasdiqlash kutilmoqda ]</p>
                         </td>
                     </tr>
 
+                    <!-- Body -->
                     <tr>
-                        <td style="padding: 40px 30px; text-align: center;">
-                            <h2 style="color: #1a1a1a; margin-top: 0;">Beep-boop! Human, are you there?</h2>
-                            
-                            <p style="color: #4a4a4a; font-size: 16px; line-height: 1.6;">
-                                Hello! I am the **Coderboys OAuth Server**. I don't have a soul, but I do have a sense of security. 
-                                Someone (hopefully you!) asked me to connect your account.
-                            </p>
-                            
-                            <p style="color: #4a4a4a; font-size: 16px; line-height: 1.6;">
-                                To make sure you're not a mischievous bot trying to steal my data, I've generated a <strong>top-secret URL</strong> just for you. 
-                                Click the button below to prove you're a real human:
+                        <td style="padding: 45px 35px; text-align: center;">
+                            <h2 style="color: #24292f; margin-top: 0; font-size: 20px; font-weight: 600;">Assalomu alaykum, aziz foydalanuvchi!</h2>
+
+                            <p style="color: #4a4a4a; font-size: 16px; line-height: 1.7;">
+                                Men — <strong>Coderboys</strong> tizimining virtual yordamchisiman. Garchi men robot bo'lsam-da, sizning xavfsizligingizni ta'minlash mening asosiy vazifamdir.
                             </p>
 
+                            <p style="color: #4a4a4a; font-size: 16px; line-height: 1.7;">
+                                Tizimga ulanish so'rovi yuborilganligi sababli, ma'lumotlaringiz begona qo'llarga tushib qolmaganiga ishonch hosil qilishimiz kerak.
+                                Iltimos, quyidagi tugmani bosish orqali ushbu amalni o'zingiz bajarayotganingizni tasdiqlang:
+                            </p>
+
+                            <!-- Button -->
                             <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin: 35px 0;">
                                 <tr>
                                     <td align="center">
-                                        <a href="{{ verify_url }}" style="background-color: #0d6efd; color: #ffffff; padding: 16px 35px; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 16px; box-shadow: 0 4px 15px rgba(13, 110, 253, 0.3); display: inline-block;">
-                                            Yes, I'm Human. Let me in!
+                                        <a href="{{ verify_url }}" style="background-color: #1a7f37; color: #ffffff; padding: 18px 40px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px; box-shadow: 0 4px 15px rgba(26, 127, 55, 0.3); display: inline-block; font-family: monospace;">
+                                            > Tasdiqlash va tizimga kirish
                                         </a>
                                     </td>
                                 </tr>
                             </table>
 
-                            <p style="color: #888; font-size: 13px; font-style: italic;">
-                                "If you didn't ask for this, just ignore me. I'll go back to counting binary digits."
+                            <p style="color: #999; font-size: 13px; font-style: italic; border-left: 3px solid #eee; padding-left: 10px; margin: 0 20px;">
+                                "Agar ushbu xabar sizga yanglishib kelgan bo'lsa, xavotir olmang, uni shunchaki e'tiborsiz qoldirishingiz mumkin. Men esa binar kodlar olamiga qaytaman."
                             </p>
                         </td>
                     </tr>
 
+                    <!-- Footer -->
                     <tr>
-                        <td style="background-color: #f8f9fa; padding: 30px; text-align: center; border-top: 1px solid #eeeeee;">
-                            <p style="color: #999; font-size: 12px; margin: 0; line-height: 1.5;">
-                                This message was sent by an automated server. <br>
-                                Please don't reply to me, I don't know how to read (yet).
+                        <td style="background-color: #fafbfc; padding: 30px; text-align: center; border-top: 1px solid #eeeeee;">
+                            <p style="color: #888; font-size: 12px; margin: 0; line-height: 1.6; font-family: monospace;">
+                                Ushbu xabar tizim tomonidan avtomatik yuborildi.<br>
+                                Men robot bo'lganim sababli, afsuski, bu xabarga yozgan javobingizni o'qiy olmayman.
                             </p>
-                            <div style="margin-top: 15px; font-size: 14px;">
-                                <a href="https://axrorback.dev" style="color: #0d6efd; text-decoration: none; font-weight: 500;">Coderboys Ecosystem</a>
+                            <div style="margin-top: 20px; font-size: 14px;">
+                                <a href="https://axrorback.dev" style="color: #1a7f37; text-decoration: none; font-weight: 600; font-family: monospace;">www.axrorback.dev</a>
                             </div>
                         </td>
                     </tr>
                 </table>
-                
-                <p style="color: #aaaaaa; font-size: 11px; margin-top: 20px;">
-                    CODERBOYS AUTH SERVICE v2.0 &bull; BUILT WITH ❤️ AND CODE
+
+                <!-- Bottom Tag -->
+                <p style="color: #bbbbbb; font-size: 11px; margin-top: 25px; font-family: monospace; text-transform: uppercase; letter-spacing: 1px;">
+                    CODERBOYS AUTH SERVICE v1.0 &bull; MEHR VA PYTHON BILAN
                 </p>
             </td>
         </tr>
