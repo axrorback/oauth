@@ -1,0 +1,27 @@
+<input
+    type="hidden"
+    name="g-recaptcha-response"
+    id="id_recaptcha">
+
+<script src="https://www.google.com/recaptcha/api.js?render={{ SITE_KEY }}"></script>
+
+<script>
+
+    grecaptcha.ready(function () {
+
+        grecaptcha.execute(
+            '{{ SITE_KEY }}',
+            {
+                action: '{{ recaptcha_action|default:"submit" }}'
+            }
+        ).then(function (token) {
+
+            document.getElementById(
+                'id_recaptcha'
+            ).value = token;
+
+        });
+
+    });
+
+</script>
