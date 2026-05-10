@@ -4,9 +4,11 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
+from users.mixins import ReCaptchaV3Mixin
 
-
-class CustomLoginView(LoginView):
+class CustomLoginView(ReCaptchaV3Mixin,LoginView):
+    recaptcha_action = "login"
+    recaptcha_min_score = 0.6
     template_name = 'users/login.html'
     form_class = AuthenticationForm
     redirect_authenticated_user = True
