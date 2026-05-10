@@ -1,3 +1,4 @@
+import base64
 import os
 from datetime import timedelta
 from pathlib import Path
@@ -7,9 +8,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['auth.coderboys.dev','localhost','127.0.0.1']
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://auth.coderboys.dev',
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
+]
 
 
 INSTALLED_APPS = [
@@ -62,7 +69,8 @@ USE_X_FORWARDED_HOST = True
 OAUTH2_PROVIDER = {
     "ACCESS_TOKEN_EXPIRE_SECONDS": 3600,
     "AUTHORIZATION_CODE_EXPIRE_SECONDS": 300,
-    "REFRESH_TOKEN_EXPIRE_SECONDS": 86400,
+
+    "REFRESH_TOKEN_EXPIRE_SECONDS": 7 * 24 * 3600,
 
     "ROTATE_REFRESH_TOKEN": True,
     "REUSE_REFRESH_TOKEN": False,
@@ -77,11 +85,11 @@ OAUTH2_PROVIDER = {
 
     "PKCE_REQUIRED": True,
 
-    # OIDC
     "OIDC_ENABLED": True,
-    "OIDC_RSA_PRIVATE_KEY": open("/root/oauth/private.pem").read(),
 }
 
+private_key = base64.b64decode(str(os.getenv('OIDC_RSA_PRIVATE_KEY'))).decode()
+OIDC_RSA_PRIVATE_KEY = private_key
 
 AUTHENTICATION_BACKENDS = [
     'axes.backends.AxesBackend',
@@ -114,12 +122,25 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if DEBUG:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.getenv("POSTGRES_DB"),
+            "USER": os.getenv("POSTGRES_USER"),
+            "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
+            "HOST": os.getenv("POSTGRES_HOST"),
+            "PORT": os.getenv("POSTGRES_PORT", "5432"),
+            "CONN_MAX_AGE": 60,
+        }
+    }
 
 
 AXES_ENABLED = False
@@ -167,12 +188,9 @@ AWS_S3_FILE_OVERWRITE = False
 MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/'
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+BREVO_API_KEY = os.getenv('BREVO_API_KEY')
+BREVO_SENDER_EMAIL = os.getenv('BREVO_SENDER_EMAIL')
+BREVO_SENDER_NAME = os.getenv('BREVO_SENDER_NAME')
 
 LOGIN_REDIRECT_URL = '/'
 
