@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Tizimdan chiqish | Coderboys ID{% endblock title %}
+
+{% block extra_css %}
+<style>
+    .logout-wrapper-outer {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        min-height: calc(100vh - 160px);
+        width: 100%;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    /* 2. Kartochka dizayni */
+    .logout-card {
+        max-width: 450px;
+        width: 100%;
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 45px 35px;
+        text-align: center;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+        /* Markazda turishini kafolatlash */
+        margin: 0 auto;
+    }
+
+    .logout-icon {
+        width: 70px;
+        height: 70px;
+        background: #f6f8fa;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 25px;
+        color: var(--primary);
+        font-size: 1.8rem;
+        border: 1px solid var(--border);
+    }
+
+    .status-badge {
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        background: #f0fdf4;
+        color: #1a7f37;
+        padding: 5px 14px;
+        border-radius: 20px;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 20px;
+        border: 1px solid rgba(26, 127, 55, 0.1);
+    }
+
+    /* 3. Tugmalar va shriftlar */
+    .logout-title {
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        color: var(--text-main);
+    }
+
+    .btn-group-custom {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .btn-cb-logout {
+        padding: 12px;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        transition: 0.2s;
+    }
+
+    .btn-cb-primary-fix {
+        background: var(--primary);
+        color: white !important;
+    }
+
+    .btn-cb-outline-fix {
+        background: #fff;
+        border: 1px solid var(--border);
+        color: var(--text-main) !important;
+    }
+
+    .btn-cb-logout:hover {
+        transform: translateY(-2px);
+        opacity: 0.9;
+    }
+</style>
+{% endblock extra_css %}
+
+{% block content %}
+<div class="logout-wrapper-outer">
+    <div class="logout-card">
+        <!-- Status Badge -->
+        <div class="status-badge">
+            <i class="bi bi-shield-check"></i> Session: Terminated
+        </div>
+
+        <!-- Logout Visual -->
+        <div class="logout-icon">
+            <i class="bi bi-door-closed-fill"></i>
+        </div>
+
+        <!-- Content -->
+        <h2 class="h4 logout-title mb-2">Tizimdan chiqdingiz</h2>
+        <p class="text-muted small mb-4">
+            Xavfsizligingizni ta'minlash uchun seans yakunlandi. <br>
+            Tizimdan foydalanganingiz uchun rahmat.
+        </p>
+
+        <hr class="my-4" style="border-color: var(--border); opacity: 0.5;">
+
+        <!-- Actions -->
+        <div class="btn-group-custom">
+            <a href="{% url 'login' %}" class="btn-cb-logout btn-cb-primary-fix">
+                <i class="bi bi-box-arrow-in-right"></i> Qayta tizimga kirish
+            </a>
+            <a href="{% url 'home' %}" class="btn-cb-logout btn-cb-outline-fix">
+                <i class="bi bi-house"></i> Bosh sahifaga qaytish
+            </a>
+        </div>
+
+        <!-- Terminal Footer -->
+        <div class="mt-4 pt-2">
+            <code class="text-muted" style="font-size: 0.75rem; font-family: var(--font-mono);">
+                coderboys@id:~$ exit --status=0
+            </code>
+        </div>
+    </div>
+</div>
+{% endblock content %}
