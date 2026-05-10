@@ -1,0 +1,320 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Coderboys ID | Auth Service{% endblock title %}</title>
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #f5f7f9;
+            --card-bg: #ffffff;
+            --text: #24292f;
+            --primary: #1a7f37; /* GitHub yashil */
+            --accent: #0969da;  /* GitHub ko'k */
+            --border: #d0d7de;
+            --terminal-head: #eef1f4;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-mono); /* Terminal uslubi uchun mono shrift */
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Navbar */
+        .custom-nav {
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            padding: 0.8rem 0;
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+            color: var(--primary) !important;
+            font-size: 1.1rem;
+        }
+
+        .nav-link {
+            color: var(--text) !important;
+            font-size: 0.9rem;
+            padding: 0.6rem 1rem !important;
+            border-radius: 6px;
+            transition: 0.2s;
+        }
+
+        .nav-link:hover {
+            background: rgba(26, 127, 55, 0.08);
+            color: var(--primary) !important;
+        }
+
+        /* Terminal Window */
+        .content-wrapper {
+            max-width: 850px;
+            width: 100%;
+            margin: 100px auto 40px;
+            padding: 0 15px;
+            flex-grow: 1;
+        }
+
+        .terminal-window {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+        }
+
+        .terminal-header {
+            background: var(--terminal-head);
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .terminal-dots { display: flex; gap: 6px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot-1 { background: #ff5f56; }
+        .dot-2 { background: #ffbd2e; }
+        .dot-3 { background: #27c93f; }
+
+        .path-display { font-size: 0.75rem; color: #656d76; }
+
+        .terminal-body {
+            padding: 30px;
+        }
+
+        /* Forms & Buttons */
+        .form-control-cb {
+            background: #fff !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 6px !important;
+            padding: 10px 14px !important;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+
+        .form-control-cb:focus {
+            border-color: var(--accent) !important;
+            box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.1) !important;
+            outline: none;
+        }
+
+        .btn-cb {
+            padding: 8px 18px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            border: 1px solid var(--border);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+        }
+
+        .btn-cb-primary {
+            background: var(--primary);
+            color: white !important;
+            border: none;
+        }
+        .btn-cb-primary:hover {
+            background: #166e30;
+            transform: translateY(-1px);
+        }
+
+        .btn-cb-outline {
+            background: white;
+            color: var(--text) !important;
+        }
+        .btn-cb-outline:hover {
+            border-color: var(--accent);
+            color: var(--accent) !important;
+            background: rgba(9, 105, 218, 0.02);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 1px solid var(--border);
+            font-size: 0.75rem;
+            color: #656d76;
+            background: white;
+        }
+
+                .status-dot { color: var(--primary); font-weight: bold; }
+
+                /* Parol ko'rsatish tugmasi uchun stillar */
+        .password-wrapper {
+            position: relative;
+            display: block;
+        }
+
+        .password-wrapper input {
+            padding-right: 40px !important; /* Ikonka uchun joy */
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #656d76;
+            z-index: 10;
+            font-size: 1.1rem;
+            transition: 0.2s;
+        }
+
+        .toggle-password:hover {
+            color: var(--primary);
+        }
+
+        {% block extra_css %}{% endblock %}
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top custom-nav">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="bi bi-terminal-fill"></i> CODERBOYS_ID
+            </a>
+
+            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="bi bi-list fs-3"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center gap-lg-2">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'integrations' %}">integratsiya</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'features' %}">batafsil</a></li>
+
+                    <span class="d-none d-lg-block opacity-25">|</span>
+
+                    {% if user.is_authenticated %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" data-bs-toggle="dropdown">
+                                <i class="bi bi-person-circle"></i> {{ user.username }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end border-0 shadow-sm mt-2">
+                                <li><a class="dropdown-item py-2" href="{% url 'profile' %}"><i class="bi bi-grid me-2"></i> dashboard</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <form action="{% url 'logout' %}" method="post" class="px-2">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-cb btn-cb-outline w-100 text-danger border-0">chiqish</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a href="{% url 'login' %}" class="btn-cb btn-cb-outline">kirish</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'register' %}" class="btn-cb btn-cb-primary">ro'yxatdan o'tish</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content Area -->
+    <main class="content-wrapper">
+        <article class="terminal-window">
+            <div class="terminal-header">
+                <div class="terminal-dots">
+                    <div class="dot dot-1"></div>
+                    <div class="dot dot-2"></div>
+                    <div class="dot dot-3"></div>
+                </div>
+                <div class="path-display">
+                    <i class="bi bi-shield-lock"></i> auth_service / {{ request.path }}
+                </div>
+            </div>
+
+            <div class="terminal-body">
+                {% block content %}
+                <!-- Namuna sifatida Login formasi -->
+                <div style="max-width: 400px;" class="mx-auto">
+                    <h2 class="fs-5 mb-4 text-center">coderboysID@login:~$</h2>
+
+                    <div class="mb-3">
+                        <label class="small mb-1 opacity-75">username:</label>
+                        <input type="text" class="form-control form-control-cb" placeholder="shunchaki_yozing">
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="small mb-1 opacity-75">password:</label>
+                        <input type="password" class="form-control form-control-cb" placeholder="********">
+                    </div>
+
+                    <button class="btn-cb btn-cb-primary w-100 justify-content-center">./tizimga_kirish.sh</button>
+                </div>
+                {% endblock %}
+            </div>
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="mb-2">
+                <span class="status-dot">●</span> auth_system: <span class="text-success">nominal</span>
+            </div>
+            <div>© 2026 Coderboys | <span class="text-muted">v1.0.4-stable</span></div>
+            <div class="small opacity-50 mt-1">Python & Django orqali quvvatlanadi</div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    document.querySelectorAll('input[type="password"]').forEach(passwordInput => {
+        // 1. Har bir parol inputini o'rab olamiz
+        const wrapper = document.createElement('div');
+        wrapper.className = 'password-wrapper';
+        passwordInput.parentNode.insertBefore(wrapper, passwordInput);
+        wrapper.appendChild(passwordInput);
+
+        // 2. Ikonkani yaratamiz
+        const toggleIcon = document.createElement('i');
+        toggleIcon.className = 'bi bi-eye toggle-password';
+        wrapper.appendChild(toggleIcon);
+
+        // 3. Click hodisasi
+        toggleIcon.addEventListener('click', function() {
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                this.classList.replace('bi-eye', 'bi-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                this.classList.replace('bi-eye-slash', 'bi-eye');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
