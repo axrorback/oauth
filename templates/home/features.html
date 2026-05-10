@@ -1,205 +1,235 @@
-<!DOCTYPE html>
-<html lang="uz">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Imkoniyatlar | Coderboys ID</title>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #0d1117;
-            --card-bg: #161b22;
-            --text: #c9d1d9;
-            --primary: #238636;
-            --border: #30363d;
-            --accent: #58a6ff;
-            --font-mono: 'JetBrains Mono', monospace;
-        }
+{% extends 'base.html' %}
+{% load static %}
 
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            line-height: 1.7;
-        }
+{% block title %}Imkoniyatlar | Coderboys ID{% endblock title %}
 
-        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
-        .mono { font-family: var(--font-mono); }
+{% block extra_css %}
+<style>
+    .feature-section {
+        margin-bottom: 60px;
+        padding-bottom: 20px;
+    }
 
-        h1, h2, h3 { color: #fff; }
-        .accent-text { color: var(--accent); }
+    .feature-header {
+        text-align: center;
+        padding: 40px 0;
+        margin-bottom: 40px;
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+    }
 
-        .section { margin-bottom: 60px; padding-bottom: 40px; border-bottom: 1px solid var(--border); }
+    /* Comparison Table Styles */
+    .comparison-container {
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        overflow: hidden;
+        margin: 20px 0;
+        background: #fff;
+    }
 
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background: var(--card-bg);
-            border-radius: 8px;
-            overflow: hidden;
-        }
+    .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+    }
 
-        .comparison-table th, .comparison-table td {
-            padding: 15px;
-            border: 1px solid var(--border);
-            text-align: left;
-        }
+    .comparison-table th {
+        background: #f6f8fa;
+        color: var(--text-main);
+        font-weight: 600;
+        padding: 12px 15px;
+        border-bottom: 1px solid var(--border);
+    }
 
-        .comparison-table th { background: #21262d; color: var(--accent); }
+    .comparison-table td {
+        padding: 12px 15px;
+        border-bottom: 1px solid var(--border);
+        color: var(--text-muted);
+    }
 
-        .flow-step {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 20px;
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 12px;
-            border-left: 4px solid var(--primary);
-        }
+    .comparison-table tr:last-child td {
+        border-bottom: none;
+    }
 
-        .step-num {
-            background: var(--primary);
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            font-weight: bold;
-        }
+    /* Flow Steps */
+    .flow-card {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 15px;
+        background: #fff;
+        padding: 20px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        transition: 0.2s;
+    }
 
-        .code-snippet {
-            background: #000;
-            padding: 15px;
-            border-radius: 8px;
-            color: #7ee787;
-            font-size: 0.9rem;
-            margin-top: 10px;
-            border: 1px solid var(--border);
-        }
+    .flow-card:hover {
+        border-color: var(--primary);
+        background: #fcfdfc;
+    }
 
-        @media (max-width: 600px) {
-            .comparison-table { font-size: 0.8rem; }
-        }
-    </style>
-</head>
-<body>
+    .step-circle {
+        background: var(--primary);
+        color: white;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        font-weight: 600;
+        font-size: 0.85rem;
+    }
 
-<div class="container">
+    /* Code Snippet in flow */
+    .mini-code {
+        background: #f6f8fa;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid var(--border);
+        font-size: 0.8rem;
+        color: var(--primary);
+        margin-top: 10px;
+    }
+
+    /* Benefits list */
+    .benefit-item {
+        padding: 10px 0;
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+    }
+</style>
+{% endblock extra_css %}
+
+{% block content %}
+<div class="container" style="max-width: 850px;">
+    
     <!-- Header -->
-    <div class="section" style="text-align: center; border: none;">
-        <h1 class="mono">/features --detailed</h1>
-        <p style="color: #8b949e;">Coderboys ID tizimining ishlash mantiqi va afzalliklari</p>
+    <div class="feature-header">
+        <h1 class="h3 fw-bold mono">/features --detailed</h1>
+        <p class="text-muted small">Coderboys ID tizimining ishlash mantiqi va afzalliklari</p>
     </div>
 
-    <!-- 1. Nima bu servis? -->
-    <div class="section">
-        <h2><i class="bi bi-question-circle"></i> Bu qanday servis?</h2>
-        <p>
-            **Coderboys ID** — bu markazlashgan autentifikatsiya va avtorizatsiya provayderi.
-            U "Identity as a Service" (IDaaS) modelida ishlaydi. Bu shuni anglatadiki, siz o'z loyihangizda
-            foydalanuvchilarni ro'yxatga olish, parollarni saqlash va login qilish qismini yozib o'tirmaysiz.
-            Barcha og'irlikni bizning serverlar ko'taradi.
+    <!-- 1. Service Description -->
+    <section class="feature-section">
+        <h2 class="h4 fw-bold mb-3"><i class="bi bi-info-square text-primary"></i> Bu qanday servis?</h2>
+        <p class="text-muted">
+            <strong>Coderboys ID</strong> — bu markazlashgan autentifikatsiya va avtorizatsiya provayderi bo'lib, 
+            "Identity as a Service" (IDaaS) modelida ishlaydi. Siz o'z loyihangizda foydalanuvchilarni ro'yxatga olish, 
+            parollarni saqlash va login mantiqini yozib o'tirmaysiz. Barcha xavfsizlik va infratuzilma yukini biz o'z zimmamizga olamiz.
         </p>
-    </div>
+    </section>
 
-    <!-- 2. OAuth2 vs Oddiy API -->
-    <div class="section">
-        <h2><i class="bi bi-arrow-left-right"></i> OAuth2 vs Oddiy API Auth</h2>
-        <p>Nega shunchaki Login API emas, aynan OAuth2? Farqini quyidagi jadvalda ko'rishingiz mumkin:</p>
+    <!-- 2. OAuth2 Comparison -->
+    <section class="feature-section">
+        <h2 class="h4 fw-bold mb-3"><i class="bi bi-shield-check text-primary"></i> OAuth2 vs Oddiy API Auth</h2>
+        <p class="text-muted small">Nega shunchaki Login API emas, aynan OAuth2? Farqini jadvalda ko'ring:</p>
 
-        <table class="comparison-table">
-            <thead>
-                <tr>
-                    <th>Xususiyat</th>
-                    <th>Oddiy API (JWT)</th>
-                    <th>Coderboys OAuth2</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Xavfsizlik</td>
-                    <td>Parol sizning bazangizda turadi</td>
-                    <td>Parol bizda, sizda faqat Token</td>
-                </tr>
-                <tr>
-                    <td>SSO imkoniyati</td>
-                    <td>Faqat bitta saytda ishlaydi</td>
-                    <td>Barcha loyihalaringizga bitta login</td>
-                </tr>
-                <tr>
-                    <td>Uchinchi tomon</td>
-                    <td>Xavfli (parol berish kerak)</td>
-                    <td>Xavfsiz (faqat ruxsat beriladi)</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+        <div class="comparison-container">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Xususiyat</th>
+                        <th>Oddiy API (JWT)</th>
+                        <th>Coderboys OAuth2</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="fw-bold">Xavfsizlik</td>
+                        <td>Parol sizning bazangizda turadi</td>
+                        <td class="text-primary fw-medium">Parol bizda, sizda faqat Token</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">SSO imkoniyati</td>
+                        <td>Faqat bitta saytda ishlaydi</td>
+                        <td class="text-primary fw-medium">Barcha loyihalarga bitta login</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">Uchinchi tomon</td>
+                        <td>Xavfli (parol berish shart)</td>
+                        <td class="text-primary fw-medium">Xavfsiz (faqat ruxsat olinadi)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
 
-    <!-- 3. Ishlash oqimi (Flow) -->
-    <div class="section">
-        <h2><i class="bi bi-diagram-3"></i> Integratsiya Flow</h2>
-        <p>Agar foydalanuvchi sizning saytingizda "Coderboys orqali kirish" tugmasini bossa, jarayon quyidagicha kechadi:</p>
-
-
-
-        <div class="flow-step">
-            <div class="step-num">1</div>
+    <!-- 3. Integration Flow -->
+    <section class="feature-section">
+        <h2 class="h4 fw-bold mb-4"><i class="bi bi-diagram-3 text-primary"></i> Integratsiya Flow</h2>
+        
+        <div class="flow-card">
+            <div class="step-circle">1</div>
             <div>
-                <strong>Redirect:</strong> Saytingiz foydalanuvchini bizning <code>/authorize/</code> sahifamizga yuboradi.
+                <h4 class="h6 fw-bold mb-1">Redirect</h4>
+                <p class="small text-muted mb-0">Ilovangiz foydalanuvchini bizning <code>/authorize/</code> sahifamizga yuboradi.</p>
             </div>
         </div>
 
-        <div class="flow-step">
-            <div class="step-num">2</div>
+        <div class="flow-card">
+            <div class="step-circle">2</div>
             <div>
-                <strong>Consent:</strong> Foydalanuvchi o'z login/parolini kiritadi va sizning ilovangizga ruxsat beradi.
+                <h4 class="h6 fw-bold mb-1">Consent</h4>
+                <p class="small text-muted mb-0">Foydalanuvchi tizimga kiradi va sizning ilovangizga ma'lumotlarini olishga ruxsat beradi.</p>
             </div>
         </div>
 
-        <div class="flow-step">
-            <div class="step-num">3</div>
+        <div class="flow-card">
+            <div class="step-circle">3</div>
             <div>
-                <strong>Callback:</strong> Biz foydalanuvchini maxsus <code>code</code> bilan sizning saytingizga qaytaramiz.
+                <h4 class="h6 fw-bold mb-1">Callback</h4>
+                <p class="small text-muted mb-0">Biz foydalanuvchini maxsus bir martalik <code>code</code> bilan sizning saytingizga qaytaramiz.</p>
             </div>
         </div>
 
-        <div class="flow-step">
-            <div class="step-num">4</div>
+        <div class="flow-card">
+            <div class="step-circle">4</div>
             <div>
-                <strong>Token Exchange:</strong> Sizning backend-ingiz ushbu kodni bizga yuborib, <code>access_token</code> oladi.
-                <div class="code-snippet mono">
-                    POST /o/token/ <br>
-                    { "code": "...", "client_id": "...", "grant_type": "authorization_code" }
+                <h4 class="h6 fw-bold mb-1">Token Exchange</h4>
+                <p class="small text-muted mb-2">Sizning backend-ingiz ushbu kodni bizga yuborib, <code>access_token</code> oladi.</p>
+                <div class="mini-code mono">
+                    POST /o/token/ { "code": "...", "grant_type": "auth_code" }
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- 4. Foydasi nimada? -->
-    <div class="section" style="border: none;">
-        <h2><i class="bi bi-gem"></i> Foydalanuvchi va Dasturchi uchun foydasi</h2>
-        <ul>
-            <li><strong>Vaqt tejalishi:</strong> Login/Register funksiyasini qurish uchun ketadigan 10-15 soatlik ishni 15 daqiqaga qisqartirasiz.</li>
-            <li><strong>Ishonch:</strong> Foydalanuvchilar har bir yangi saytda yangi parol o'ylab topishdan charchashmaydi.</li>
-            <li><strong>Xavfsizlik:</strong> Ma'lumotlar buzib kirilsa ham, sizning bazangizda foydalanuvchi parollari bo'lmaydi.</li>
-            <li><strong>SSO:</strong> Barcha loyihalaringizga bitta login.</li>
-            <li><strong>UX:</strong> Foydalanuvchilar faqatgina Sign with CODERBOYS orqali sizning ilovadan foydalanishi mumkin!</li>
-        </ul>
-    </div>
+    <!-- 4. Benefits -->
+    <section class="feature-section border-0">
+        <h2 class="h4 fw-bold mb-4"><i class="bi bi-gem text-primary"></i> Asosiy afzalliklar</h2>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="benefit-item">
+                    <i class="bi bi-clock-history text-success"></i>
+                    <span class="small text-muted"><strong>Vaqt tejalishi:</strong> Auth tizimini 15 daqiqada tayyor qiling.</span>
+                </div>
+                <div class="benefit-item">
+                    <i class="bi bi-fingerprint text-success"></i>
+                    <span class="small text-muted"><strong>Xavfsizlik:</strong> Parollar sizning bazangizda saqlanmaydi.</span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="benefit-item">
+                    <i class="bi bi-people text-success"></i>
+                    <span class="small text-muted"><strong>SSO:</strong> Foydalanuvchi barcha loyihalaringizga bitta akkaunt bilan kiradi.</span>
+                </div>
+                <div class="benefit-item">
+                    <i class="bi bi-patch-check text-success"></i>
+                    <span class="small text-muted"><strong>UX:</strong> "Sign in with Coderboys" tugmasi orqali tezkor kirish.</span>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <div style="text-align: center; margin-top: 50px;">
-        <a href="https://t.me/axrorback" style="color: var(--primary); text-decoration: none; font-weight: bold;">
-            <i class="bi bi-rocket-takeoff"></i> Hoziroq integratsiyani boshlang
+    <div class="text-center py-4">
+        <a href="https://t.me/axrorback" target="_blank" class="btn-cb btn-cb-primary">
+            <i class="bi bi-rocket-takeoff"></i> Loyihani ulaymiz
         </a>
     </div>
 </div>
-
-</body>
-</html>
+{% endblock content %}
