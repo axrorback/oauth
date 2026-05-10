@@ -9,3 +9,4 @@ from .ChangePassword import ChangePasswordView
 from .ChangePasswordDone import ChangePasswordDoneView
 from .ProfileAPI import ProfileAPI
 from .LoginHistory import UserLoginHistoryView
+from .Authorize import CustomAuthorizeView
