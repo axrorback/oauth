@@ -4,13 +4,19 @@ from django.views.generic import FormView , TemplateView
 from users.forms import RegisterForm
 from users.service import UserService
 from users.models import SiteConfig
-class RegisterView(FormView):
+from users.mixins import ReCaptchaV3Mixin
+class RegisterView(ReCaptchaV3Mixin, FormView):
     template_name = 'users/register.html'
     form_class = RegisterForm
     success_url = reverse_lazy('check_email')
 
+    recaptcha_action = "register"
+    recaptcha_min_score = 0.7
+
     def dispatch(self, request, *args, **kwargs):
-        config = SiteConfig.objects.filter(key='registration_open').first()
+        config = SiteConfig.objects.filter(
+            key='registration_open'
+        ).first()
 
         if not config or not config.value:
             return redirect('register_closed')
@@ -18,6 +24,7 @@ class RegisterView(FormView):
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
+
         data = form.cleaned_data
 
         base_url = self.request.build_absolute_uri('/')[:-1]
